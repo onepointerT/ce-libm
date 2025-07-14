@@ -1,6 +1,9 @@
 #include <math.h>
 #include <stdint.h>
 
+
+#pragma function(fmodf)
+
 float fmodf(float x, float y)
 {
     union

@@ -7,6 +7,8 @@
 #endif
 static const double_t toint = 1 / EPS;
 
+#pragma function(ceil)
+
 double ceil(double x)
 {
     union

@@ -291,16 +291,16 @@ double __lgamma_r(double x, int *signgamp)
         {
         case 7:
             z *= y + 6.0;
-            [[fallthrough]];
+//            [[fallthrough]];
         case 6:
             z *= y + 5.0;
-            [[fallthrough]];
+//            [[fallthrough]];
         case 5:
             z *= y + 4.0;
-            [[fallthrough]];
+//            [[fallthrough]];
         case 4:
             z *= y + 3.0;
-            [[fallthrough]];
+//            [[fallthrough]];
         case 3:
             z *= y + 2.0;
             r += log(z);

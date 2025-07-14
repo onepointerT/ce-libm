@@ -1,5 +1,8 @@
 #include "libm.h"
 
+
+#pragma function(sinhf)
+
 float sinhf(float x)
 {
     union

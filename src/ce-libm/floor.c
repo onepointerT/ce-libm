@@ -7,6 +7,9 @@
 #endif
 static const double_t toint = 1 / EPS;
 
+
+#pragma function(floor)
+
 double floor(double x)
 {
     union

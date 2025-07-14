@@ -1,5 +1,8 @@
 #include "libm.h"
 
+
+#pragma function(sinh)
+
 /* sinh(x) = (exp(x) - 1/exp(x))/2
  *         = (exp(x)-1 + (exp(x)-1)/exp(x))/2
  *         = x + x^3/6 + o(x^5)

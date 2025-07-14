@@ -42,6 +42,9 @@
 
 #include "libm.h"
 
+
+#pragma function(sin)
+
 double sin(double x)
 {
     double y[2];

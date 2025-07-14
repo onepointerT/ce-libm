@@ -1,5 +1,7 @@
 #include "libm.h"
 
+#pragma function(ceilf)
+
 float ceilf(float x)
 {
     union

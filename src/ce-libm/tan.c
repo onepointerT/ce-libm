@@ -41,6 +41,9 @@
 
 #include "libm.h"
 
+
+#pragma function(tan)
+
 double tan(double x)
 {
     double y[2];

@@ -1,5 +1,8 @@
 #include "libm.h"
 
+
+#pragma function(tanhf)
+
 float tanhf(float x)
 {
     union

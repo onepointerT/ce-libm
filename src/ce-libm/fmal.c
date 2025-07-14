@@ -27,6 +27,9 @@
 
 #include "libm.h"
 #if LDBL_MANT_DIG == 53 && LDBL_MAX_EXP == 1024
+
+#pragma function(fmal)
+
 long double fmal(long double x, long double y, long double z)
 {
     return fma(x, y, z);

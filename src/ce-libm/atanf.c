@@ -37,6 +37,8 @@ static const float aT[] = {
     6.1687607318e-02,
 };
 
+#pragma function(atanf)
+
 float atanf(float x)
 {
     float_t w, s1, s2, z;

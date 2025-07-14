@@ -31,6 +31,8 @@ static float R(float z)
     return p / q;
 }
 
+#pragma function(acosf)
+
 float acosf(float x)
 {
     float z, w, s, c, df;

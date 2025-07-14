@@ -17,6 +17,9 @@
 
 static const float tiny = 1.0e-30;
 
+
+#pragma function(sqrtf)
+
 float sqrtf(float x)
 {
     float z;

@@ -64,6 +64,8 @@ static double R(double z)
     return p / q;
 }
 
+#pragma function(asin)
+
 double asin(double x)
 {
     double z, r, s;

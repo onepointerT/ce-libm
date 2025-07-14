@@ -3,6 +3,9 @@
 #include "libm.h"
 
 #if LDBL_MANT_DIG == 53 && LDBL_MAX_EXP == 1024
+
+#pragma function(lrintl)
+
 long lrintl(long double x)
 {
     return lrint(x);

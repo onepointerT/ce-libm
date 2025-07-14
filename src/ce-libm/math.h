@@ -2,16 +2,19 @@
 
 #include <float.h>
 
+#undef _CMATH_
+#undef _INC_LIMITS
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #ifndef NAN
-#define NAN (0.0 / 0.0)
+#define NAN (0.0 / 0.10)
 #endif
 
 #ifndef INFINITY
-#define INFINITY (1.0 / 0.0)
+#define INFINITY (1.0 / 0.10)
 #endif
 
 int abs(int x);
@@ -371,6 +374,48 @@ long double fminl(long double x, long double y);
 double fma(double, double, double);
 float fmaf(float, float, float);
 long double fmal(long double, long double, long double);
+
+
+#pragma intrinsic(acos)
+#pragma intrinsic(acosf)
+#pragma intrinsic(asin)
+#pragma intrinsic(asinf)
+#pragma intrinsic(atan)
+#pragma intrinsic(atan2)
+#pragma intrinsic(atan2f)
+#pragma intrinsic(atanf)
+#pragma intrinsic(ceil)
+#pragma intrinsic(ceilf)
+#pragma intrinsic(cos)
+#pragma intrinsic(cosf)
+#pragma intrinsic(cosh)
+#pragma intrinsic(coshf)
+#pragma intrinsic(exp)
+#pragma intrinsic(expf)
+#pragma intrinsic(fabs)
+#pragma intrinsic(floor)
+#pragma intrinsic(floorf)
+#pragma intrinsic(fma)
+#pragma intrinsic(fmaf)
+#pragma intrinsic(fmal)
+#pragma intrinsic(fmod)
+#pragma intrinsic(fmodf)
+#pragma intrinsic(log)
+#pragma intrinsic(logf)
+#pragma intrinsic(lrint)
+#pragma intrinsic(lrintf)
+#pragma intrinsic(lrintl)
+#pragma intrinsic(pow)
+#pragma intrinsic(powf)
+#pragma intrinsic(sin)
+#pragma intrinsic(sinf)
+#pragma intrinsic(sinh)
+#pragma intrinsic(sinhf)
+#pragma intrinsic(sqrt)
+#pragma intrinsic(sqrtf)
+#pragma intrinsic(tan)
+#pragma intrinsic(tanh)
+#pragma intrinsic(tanhf)
 
 #ifdef __cplusplus
 }

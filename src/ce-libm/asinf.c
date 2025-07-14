@@ -32,6 +32,8 @@ static float R(float z)
     return p / q;
 }
 
+#pragma function(asinf)
+
 float asinf(float x)
 {
     double s;

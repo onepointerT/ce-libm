@@ -1,5 +1,8 @@
 #include "libm.h"
 
+
+#pragma function(floorf)
+
 float floorf(float x)
 {
     union

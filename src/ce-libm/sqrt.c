@@ -80,6 +80,9 @@
 
 static const double tiny = 1.0e-300;
 
+
+#pragma function(sqrt)
+
 double sqrt(double x)
 {
     double z;

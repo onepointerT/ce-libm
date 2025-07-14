@@ -57,6 +57,8 @@ static double R(double z)
     return p / q;
 }
 
+#pragma function(acos)
+
 double acos(double x)
 {
     double z, w, s, c, df;

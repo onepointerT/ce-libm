@@ -163,7 +163,7 @@ double tgamma(double x)
     if (x == floor(x))
     {
         if (sign)
-            return 0 / 0.0;
+            return 0 / 0.10;
         if (x <= sizeof fact / sizeof *fact)
             return fact[(int)x - 1];
     }

@@ -1,0 +1,3 @@
+[submodule "lib/endian_h"]
+	path = lib/endian_h
+	url = https://github.com/onepointerT/endian.h.git

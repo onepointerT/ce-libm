@@ -13,10 +13,11 @@
 #ifndef _LIBM_H
 #define _LIBM_H
 
-#include <endian.h>
+#include "sys/endian.h"
+#include "sys/types.h"
 #include <float.h>
-#include <limits.h>
-#include <math.h>
+#include "limits.h"
+#include "math.h"
 #include <stdint.h>
 
 #if LDBL_MANT_DIG == 53 && LDBL_MAX_EXP == 1024

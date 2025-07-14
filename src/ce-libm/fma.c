@@ -78,6 +78,9 @@ static void mul(uint64_t *hi, uint64_t *lo, uint64_t x, uint64_t y)
     *hi = t3 + (t2 >> 32) + (t1 > *lo);
 }
 
+
+#pragma function(fma)
+
 double fma(double x, double y, double z)
 {
     /* normalize so top 10bits and last bit are 0 */

@@ -53,6 +53,9 @@ static const float
     ivln2_h = 1.4426879883e+00, /* 0x3fb8aa00 =16b 1/ln2*/
     ivln2_l = 7.0526075433e-06; /* 0x36eca570 =1/ln2 tail*/
 
+
+#pragma function(powf)
+
 float powf(float x, float y)
 {
     float z, ax, z_h, z_l, p_h, p_l;

@@ -29,6 +29,9 @@
 #include <math.h>
 #include <stdint.h>
 
+
+#pragma function(fmaf)
+
 /*
  * Fused multiply-add: Compute x * y + z with a single rounding error.
  *

@@ -1,6 +1,9 @@
 #include <math.h>
 #include <stdint.h>
 
+
+#pragma function(fmod)
+
 double fmod(double x, double y)
 {
     union

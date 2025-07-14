@@ -27,6 +27,9 @@ static const float
     Lg3 = 0x91e9ee.0p-25, /* 0.28498786688 */
     Lg4 = 0xf89e26.0p-26; /* 0.24279078841 */
 
+
+#pragma function(log10f)
+
 float log10f(float x)
 {
     union

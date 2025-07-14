@@ -26,6 +26,9 @@ as a double.
 */
 
 #if LONG_MAX < 1U << 53 && defined(FE_INEXACT)
+
+#pragma function(lrint)
+
 long lrint(double x)
 {
     int e;

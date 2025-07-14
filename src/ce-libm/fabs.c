@@ -1,6 +1,8 @@
 #include <math.h>
 #include <stdint.h>
 
+#pragma function(fabs)
+
 double fabs(double x)
 {
     union

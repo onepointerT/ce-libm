@@ -42,6 +42,8 @@
 
 #include "libm.h"
 
+#pragma function(cos)
+
 double cos(double x)
 {
     double y[2];

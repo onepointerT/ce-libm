@@ -1,5 +1,8 @@
 #include "libm.h"
 
+
+#pragma function(coshf)
+
 float coshf(float x)
 {
     union

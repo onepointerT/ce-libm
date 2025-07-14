@@ -27,6 +27,8 @@ static const float
     P1 = 1.6666625440e-1f,  /*  0xaaaa8f.0p-26 */
     P2 = -2.7667332906e-3f; /* -0xb55215.0p-32 */
 
+#pragma function(expf)
+
 float expf(float x)
 {
     float_t hi, lo, c, xx, y;

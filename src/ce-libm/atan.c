@@ -59,6 +59,8 @@ static const double aT[] = {
     1.62858201153657823623e-02,  /* 0x3F90AD3A, 0xE322DA11 */
 };
 
+#pragma function(atan)
+
 double atan(double x)
 {
     double_t w, s1, s2, z;

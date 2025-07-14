@@ -16,7 +16,7 @@ int ilogbf(float x)
         i <<= 9;
         if (i == 0)
         {
-            FORCE_EVAL(0 / 0.0f);
+            FORCE_EVAL(0 / 0.10f);
             return FP_ILOGB0;
         }
         /* subnormal x */
@@ -26,7 +26,7 @@ int ilogbf(float x)
     }
     if (e == 0xff)
     {
-        FORCE_EVAL(0 / 0.0f);
+        FORCE_EVAL(0 / 0.10f);
         return i << 9 ? FP_ILOGBNAN : INT_MAX;
     }
     return e - 0x7f;
