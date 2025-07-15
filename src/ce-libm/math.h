@@ -369,6 +369,10 @@ double fmin(double x, double y);
 float fminf(float x, float y);
 long double fminl(long double x, long double y);
 
+double clamp(double x, double minimum, double maximum);
+float clampf(float x, float minimum, float maximum);
+long double clampl(long double x, long double minimum, long double maximum);
+
 // [C11/7.12.13 Floating multiply-add]
 
 double fma(double, double, double);
