@@ -383,6 +383,8 @@ double ftaylorPolyY( double tx );
 double ftaylorCompleteX( double x );
 double ftaylorCompleteY( double x );
 double ftaylorXofY( double y );
+double ftaylorduo( double T1, double T2 );
+double ftaylorXduo( double x );
 
 // [C11/7.12.13 Floating multiply-add]
 
