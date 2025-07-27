@@ -373,6 +373,17 @@ double clamp(double x, double minimum, double maximum);
 float clampf(float x, float minimum, float maximum);
 long double clampl(long double x, long double minimum, long double maximum);
 
+// [C / Taylor polynoms]
+
+double ftaylor( double x );
+double ftaylorX( double ty );
+double ftaylorY( double tx );
+double ftaylorPolyX( double tx );
+double ftaylorPolyY( double tx );
+double ftaylorCompleteX( double x );
+double ftaylorCompleteY( double x );
+double ftaylorXofY( double y );
+
 // [C11/7.12.13 Floating multiply-add]
 
 double fma(double, double, double);

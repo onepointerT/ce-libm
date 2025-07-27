@@ -1,5 +1,5 @@
 #include "libm.h"
 
-double clampl(double x, double minimum, double maximum) {
+long double clampl(long double x, long double minimum, long double maximum) {
     return fminl(minimum, fmaxl(x, maximum));
 }
