@@ -34,6 +34,8 @@ typedef struct Point {
 
 struct Point* analysis__init_point( const double x, const double y );
 struct Point* analysis__init_point_default();
+bool greater( const struct Point* p1, const struct Point* p2 );
+bool smaller( const struct Point* p1, const struct Point* p2 );
 
 
 typedef struct LinearPath {
@@ -56,6 +58,13 @@ typedef struct Parabole {
     bool hyperbolic;
     bool parabole;
     bool trigon;
+
+    bool ceil_before_floor;
+    bool start_before_floor;
+    bool start_before_ceil;
+    bool tasp_behind_floor;
+    bool tasp_behind_ceil;
+    bool end_behind_start;
 
     struct Point* tangential_adjacency_swide_point;
 } parabole_t;

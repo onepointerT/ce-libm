@@ -67,5 +67,14 @@ double ftaylorXduo( double x ) {
     double T1 = ftaylor( x );
 
     double x_approx = nextafter( x, ftaylorX(T1) );
+    double y = ftaylorduo( T1, ftaylor( x_approx ) );
+    return ftaylorXofY( y );
+}
+
+double ftaylorYduo( double x ) {
+    double T1 = ftaylor( x );
+    double y_start = ftaylorY( T1 );
+
+    double x_approx = nextafter( remainder( x, y_start), ftaylorX(T1) );
     return ftaylorduo( T1, ftaylor( x_approx ) );
 }
