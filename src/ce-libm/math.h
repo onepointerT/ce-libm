@@ -394,6 +394,12 @@ float fmaf(float, float, float);
 long double fmal(long double, long double, long double);
 
 
+// [C17 Greatest common divisor]
+
+double gcd( const double a, const double m );
+double lcm( const double a, const double b );
+
+
 #pragma intrinsic(acos)
 #pragma intrinsic(acosf)
 #pragma intrinsic(asin)
