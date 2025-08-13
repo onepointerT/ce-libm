@@ -398,6 +398,7 @@ long double fmal(long double, long double, long double);
 
 double gcd( const double a, const double m );
 double lcm( const double a, const double b );
+double multiplinv( const double x );
 
 
 #pragma intrinsic(acos)
