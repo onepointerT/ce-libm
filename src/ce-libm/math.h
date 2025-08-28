@@ -229,6 +229,8 @@ double logb(double x);
 float logbf(float x);
 long double logbl(long double x);
 
+double ln( double a );
+
 double modf(double x, double *integral);
 float modff(float x, float *integral);
 long double modfl(long double x, long double *integral);
