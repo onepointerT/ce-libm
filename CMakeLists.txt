@@ -11,12 +11,16 @@ add_definitions( -D__x86_64__)
 
 include_directories( ${PROJECT_SOURCE_DIR}/lib/endian_h )
 include_directories( src/ce-libm )
-#include_directories( src/ce-liba )
+include_directories( src/ce-liba )
+include_directories( src/ce-libprim )
 
 file( GLOB LIBM_SOURCES src/ce-libm/*.c )
 add_library( m_ce ${LIBM_SOURCES} )
 
-#file( GLOB LIBA_SOURCES src/ce-liba/*.c )
-#add_library( a_ce ${LIBA_SOURCES} )
-#target_link_libraries( a_ce m_ce )
+file( GLOB LIBA_SOURCES src/ce-liba/*.c )
+add_library( a_ce ${LIBA_SOURCES} )
+target_link_libraries( a_ce m_ce )
 
+file( GLOB LIBPRIM_SOURCES src/ce-libprim/*.c )
+add_library( prim_ce ${LIBPRIM_SOURCES} )
+target_link_libraries( prim_ce a_ce )

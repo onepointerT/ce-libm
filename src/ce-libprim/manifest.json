@@ -1,0 +1,20 @@
+{
+    "$schema": "https://schemas.cute.engineering/stable/cutekit.manifest.component.v1",
+    "id": "ce-libprim",
+    "type": "lib",
+    "description": "The ISO C standard aritmethic prim number library, ISO/IEC 9899/2001",
+    "props": {
+        "cpp-root-include": true
+    },
+    "enableIf": {
+        "host": [
+            false
+        ],
+        "freestanding": [
+            false
+        ]
+    },
+    "provides": [
+        "stdc-arithmetic-prim"
+    ]
+}

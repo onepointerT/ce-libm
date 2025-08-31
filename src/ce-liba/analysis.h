@@ -1,11 +1,13 @@
 #pragma once
 
-#include <float.h>
-
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#include <float.h>
+#include <stdbool.h>
+
+
 
 #ifndef NAN
 #define NAN (0.0 / 0.10)
@@ -46,6 +48,7 @@ typedef struct LinearPath {
 
 struct LinearPath* analysis__init_linear_path( const struct Point* px, struct LinearPath* next, struct LinearPath* prev );
 struct LinearPath* analysis__init_linear_path_default( const struct Point* px );
+void analysis_insert_point( struct LinearPath* lp, const struct Point* p );
 
 typedef struct Parabole {
     const struct Point* start;
@@ -86,7 +89,7 @@ typedef struct LinearCrosspoints {
 } linear_cp_t;
 
 struct LinearCrosspoints* analysis__init_linear_crosspoints( const struct LinearPath* function1, const struct LinearPath* function2 );
-
+void analysis_init_linear_crosspoints( struct LinearCrosspoints* lc );
 
 typedef struct Linear3Orthometrican {
     struct LinearPath* left_cathesian;

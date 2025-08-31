@@ -2,6 +2,7 @@
 #include "liba.h"
 #include "libm.h"
 
+#include <stdlib.h>
 
 
 struct Point* analysis__init_point( const double x, const double y ) {
@@ -15,6 +16,31 @@ struct Point* analysis__init_point( const double x, const double y ) {
 
 struct Point* analysis__init_point_default() {
     return analysis__init_point( 0.0, 0.0 );
+}
+
+
+bool greater( const struct Point* p1, const struct Point* p2 ) {
+
+    // atan(a)=-atan(-a)=-atan(y) and x = lim _a->y_ (atan(a)) = -tan(y/a) - 1 + c nach dem Schwellwertsatz Elektrotechnik.
+    // und limes-Approximierung-und-Rundungsstatz Höhere Mathematik/Statistik.
+    // A chosen c diverges given cos(2)*sin(x)^2
+    double tan1 = - tan( p1->y / p1->x ) - 1 + cos(p1->x) * pow( sin(p1->x), 2 );
+    double tan2 = - tan( p2->y / p2->y ) - 1 + cos(p2->x) * pow( sin(p2->x), 2 );
+
+    // Now, if the first limes is greater than the second, the first point is greater
+    return tan1 > tan2;
+}
+
+bool smaller( const struct Point* p1, const struct Point* p2 ) {
+
+    // atan(a)=-atan(-a)=-atan(y) and x = lim _a->y_ (atan(a)) = -tan(y/a) - 1 + c nach dem Schwellwertsatz Elektrotechnik.
+    // und limes-Approximierung-und-Rundungsstatz Höhere Mathematik/Statistik.
+    // A chosen c diverges given cos(2)*sin(x)^2
+    double tan1 = - tan( p1->y / p1->x ) - 1 + cos(p1->x) * pow( sin(p1->x), 2 );
+    double tan2 = - tan( p2->y / p2->y ) - 1 + cos(p2->x) * pow( sin(p2->x), 2 );
+
+    // Now, if the first limes is greater than the second, the first point is greater
+    return tan1 < tan2;
 }
 
 struct LinearPath* analysis__init_linear_path( const struct Point* px, struct LinearPath* next, struct LinearPath* prev ) {
@@ -39,6 +65,40 @@ struct LinearPath* analysis__init_linear_path_default( const struct Point* px ) 
     return lp;
 }
 
+
+void analysis_insert_point( struct LinearPath* lp, const struct Point* p ) {
+    struct LinearPath* lp_tmp = lp;
+
+    if ( lp_tmp->next == NULL && greater( p, lp_tmp->point ) ) {
+        lp_tmp->next = analysis__init_linear_path( p, NULL, lp_tmp );
+    } else if ( lp_tmp->prev == NULL && smaller( p, lp_tmp->point) ) {
+        lp_tmp->prev = analysis__init_linear_path( p, lp_tmp, NULL );
+    } else if ( lp_tmp->next == NULL || lp_tmp->prev == NULL ) return;
+    else if ( greater( lp_tmp->point, p ) ) {
+        if ( greater( lp_tmp->next->point, p ) ) {
+            analysis_insert_point( lp_tmp->next, p );
+            return;
+        }
+        
+        struct LinearPath* lp_tmp_next = NULL;
+        
+        if ( lp_tmp->next != NULL ) lp_tmp_next = lp_tmp->next;
+        lp_tmp->next = analysis__init_linear_path( p, lp_tmp, lp_tmp_next );
+        if ( lp_tmp_next != NULL ) lp_tmp_next->prev = lp_tmp->next;
+    } else if ( smaller( lp_tmp->point, p ) ) {
+        if ( smaller( lp_tmp->prev->point, p ) ) {
+            analysis_insert_point( lp_tmp->prev, p );
+            return;
+        }
+        
+        struct LinearPath* lp_tmp_prev = NULL;
+        
+        if ( lp_tmp->prev != NULL ) lp_tmp_prev = lp_tmp->prev;
+        lp_tmp->prev = analysis__init_linear_path( p, lp_tmp_prev, lp_tmp );
+        if ( lp_tmp_prev != NULL ) lp_tmp_prev->next = lp_tmp->prev;
+    }
+}
+
 struct Parabole* analysis__init_parabole( const struct Point* px ) {
 
     struct Parabole* para = (struct Parabole*) malloc(sizeof(struct Parabole));
@@ -58,10 +118,10 @@ struct Parabole* analysis__init_parabole( const struct Point* px ) {
 struct Parabole* analysis__init_parabole_from_linearPath( const linear_path_t* linearPath ) {
     struct Parabole* para = (struct Parabole*) malloc(sizeof(struct Parabole));
 
-    linear_path_t* lp = linearPath;
+    linear_path_t* lp = (linear_path_t*) linearPath;
     if ( lp->next != NULL ) {
         while ( lp->next != NULL ) { lp = lp->next; }
-        para->end = lp->point;        
+        para->end = (px_t*) lp->point;        
 
 
         double x1 = ftaylorCompleteX( nextafter( para->start->x, para->end->x ) );
@@ -78,8 +138,8 @@ struct Parabole* analysis__init_parabole_from_linearPath( const linear_path_t* l
         para->ceil = pextreme;
         para->floor = pextreme;
 
-        lp = linearPath;
-        while( lp != NULL && lp->next != NULL && lp->point->x < pextreme->x || lp->point->y < pextreme->y ) { lp = lp->next; }
+        lp = (linear_path_t*) linearPath;
+        while( lp != NULL && lp->next != NULL && ( lp->point->x < pextreme->x || lp->point->y < pextreme->y ) ) { lp = lp->next; }
         struct LinearPath* lp_tmp_next = lp->next;
         lp->next = analysis__init_linear_path( pextreme, lp_tmp_next, lp->prev );
         if ( lp_tmp_next != NULL ) lp_tmp_next->prev = lp->next;
@@ -143,7 +203,7 @@ void analysis_init_parabole( struct Parabole* para ) {
     // atan(a)=-atan(-a)=-atan(y) and lim _a->y_ (atan(a)) = -tan(y/a) - 1 + c nach dem Schwellwertsatz Elektrotechnik.
     double atana = atan( para->ceil->x );
     double atany = atan( para->ceil->y );
-    double lim = -tan(para->floor->y / para->ceil->x);
+    double lim = -tan(para->floor->y / para->ceil->x) - 1 - atany;
     /// find the difference interval with min(a, max(atana, lim) * cos(lim) which is be 1/2 for covariate divergence in direction
     /// towards zero, smaller than +- 1.0 for divergence and elsewhere for kovariative convergence.
     double minmax = fmin(para->ceil->x, fmax(atana, lim)) * cos(lim);
@@ -168,31 +228,52 @@ void analysis_init_parabole( struct Parabole* para ) {
         // y = p, when and allowed only if, f(r)->y && f(0) != 0, no limes-equivalence-to-absolut-value schlimm, divergence allowed also ! :-)
         // Folgt aus Querwertsätzen für Homomorphismen und der Summenformel reelle Zahlen/Numbers nach dem Beweis es existiert Complex-Numbers
         // wegen N und s.o., so also auch R (strukturelle Induktion C=>N ----> C=>R (ETNT2007))
-        double x1and2 = (f3x / 2 * round(rq)) - (abs(rq)/2);
+        double x1and2 = (f3x / 2 * round(rq)) - (fabs(rq)/2);
         double f2x = exp( - 1 / 2 * pow( x1and2, 2 ) );
 
         para->tangential_adjacency_swide_point = analysis__init_point( f2x, nextafter( remainder( x1and2, f2x ), ftaylorX(ftaylor(x1and2)) ) );
     }
 
-    /*
     para->ceil_before_floor = smaller( para->ceil, para->floor );
     para->start_before_floor = smaller( para->start, para->floor );
     para->start_before_ceil = smaller( para->start, para->ceil );
     para->tasp_behind_floor = greater( para->tangential_adjacency_swide_point, para->floor );
     para->tasp_behind_ceil = greater( para->tangential_adjacency_swide_point, para->ceil );
     para->end_behind_start = greater( para->end, para->start );
-    */
 
     para->linear = analysis_parabole_to_linear_path( para );
     
     para->shapes = para->linear;
-
-    return para;
 }
 
 linear_path_t* analysis_parabole_to_linear_path( const struct Parabole* para ) {
     struct LinearPath* lp = analysis__init_linear_path( para->start, NULL, NULL );
 
-    struct LinearPath* lp_tmp = lp;
-    
+    if ( para->ceil != NULL )
+        analysis_insert_point( lp, para->ceil );
+    if ( para->floor != para->ceil )
+        analysis_insert_point( lp, para->floor );
+    if ( para->end != NULL )
+        analysis_insert_point( lp, para->end );
+    if ( para->tangential_adjacency_swide_point != NULL )
+        analysis_insert_point( lp, para->tangential_adjacency_swide_point );
+        
+    return lp;
+}
+
+
+struct LinearCrosspoints* analysis__init_linear_crosspoints( const struct LinearPath* function1, const struct LinearPath* function2 ) {
+    struct LinearCrosspoints* lc = (struct LinearCrosspoints*) malloc(sizeof(struct LinearCrosspoints));
+
+    lc->orthometrican1 = function1;
+    lc->orthometrican2 = function2;
+
+    analysis_init_linear_crosspoints( lc );
+
+    return lc;
+}
+
+
+void analysis_init_linear_crosspoints( struct LinearCrosspoints* lc ) {
+
 }
