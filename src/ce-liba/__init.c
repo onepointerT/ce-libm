@@ -277,3 +277,15 @@ struct LinearCrosspoints* analysis__init_linear_crosspoints( const struct Linear
 void analysis_init_linear_crosspoints( struct LinearCrosspoints* lc ) {
 
 }
+
+
+struct Integral* analysis__init_integral( const double limit_low, const double limit_up, const char* fx, const char* cons ) {
+    struct Integral* integral = (struct Integral*) malloc(sizeof(struct Integral));
+
+    integral->limit_lower = limit_low;
+    integral->limit_upper = limit_up;
+    integral->function = analysis__init_function( fx );
+    integral->constant = analysis__init_function( cons );
+
+    return integral;
+}

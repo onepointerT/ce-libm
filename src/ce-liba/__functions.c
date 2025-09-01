@@ -16,8 +16,13 @@ const char* toString( const union Exponent aexpo ) {
 }
 
 
-double toDoubleCalc( const union Exponent aexpo, const double ax  ) {
+double toDouble( const union Exponent aexpo ) {
+    return ( strcmp(aexpo.exponent_str, "") == 0 ) ? aexpo.exponent : *((double*) aexpo.exponent_str);
+}
 
+
+double toDoubleCalc( const union Exponent aexpo, const double ax, const double x  ) {
+    return ax * pow(x, toDouble(aexpo));
 }
 
 
@@ -159,13 +164,7 @@ void analysis_init_function_from_summand( struct ArithmeticFunction* arith_func,
 
 
 double analysis_calculate_function_factorial( const struct ArithmeticFunction* func, double a ) {
-
-    double x_val = func->factorialX * a;
-
-    double result = pow( x_val, toDoubleCalc(func->exponent, x_val) );
-
-    return result;
-
+    return toDoubleCalc( func->exponent, func->factorialX, a );
 }
 
 double analysis_calculate_function_factorial_with_constant( const struct ArithmeticFunction* func, double a, double c ) {
@@ -283,18 +282,27 @@ double analysis_calculate_function_deviationNth_plus_constant( const struct Func
 
 
 struct FunctionAdvanced* analysis__init_function_advanced( const char* funcstr ) {
-    struct FunctionAdvanced* func_adv = (struct FunctionAdvanced*) malloc(sizeof(struct FunctionAdvanced));
+    struct FunctionAdvanced* func_adv = analysis__init_function_default_advanced( funcstr );
 
-
+    func_adv->f1 = analysis__init_function( "lim_a->x (func(a)-func(x)/a-x)");
+    func_adv->f2 = analysis__init_function( "lim_a->x (f1(a)-f1(x)/a-x)");
+    func_adv->f3 = analysis__init_function( "lim_a->x (f2(a)-f2(x)/a-x)");
 
     return func_adv;
 }
 
-struct FunctionAdvanced* analysis__init_function_default_advanced() {
+struct FunctionAdvanced* analysis__init_function_default_advanced( const char* funcstr ) {
+    struct FunctionAdvanced* func_adv = (struct FunctionAdvanced*) malloc(sizeof(struct FunctionAdvanced));
 
+    func_adv->func = analysis__init_function( funcstr );
+    func_adv->f1 = 0;
+    func_adv->f2 = 0;
+    func_adv->f3 = 0;
+
+    return func_adv;
 }
 
-void analysis_init_function_advanced( struct FunctionAdvanced* func ) {
-
+void analysis_init_function_advanced( struct FunctionAdvanced* func, const char* funcstr ) {
+    func = analysis__init_function_advanced( funcstr );
 }
 

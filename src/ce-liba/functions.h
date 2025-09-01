@@ -15,7 +15,8 @@ typedef union Exponent {
 } ArithmeticExponent;
 
 const char* toString( const union Exponent aexpo );
-double toDoubleCalc( const ArithmeticExponent aexpo, const double ax );
+double toDouble( const union Exponent aexpo );
+double toDoubleCalc( const ArithmeticExponent aexpo, const double ax, const double x );
 
 struct ArithmeticFunction {
     double factorialX;  // For example 2 in front of x
@@ -71,8 +72,8 @@ struct FunctionAdvanced {
 };
 
 struct FunctionAdvanced* analysis__init_function_advanced( const char* funcstr );
-struct FunctionAdvanced* analysis__init_function_default_advanced();
-void analysis_init_function_advanced( struct FunctionAdvanced* func );
+struct FunctionAdvanced* analysis__init_function_default_advanced( const char* funcstr );
+void analysis_init_function_advanced( struct FunctionAdvanced* func, const char* funcstr );
 
 
 #ifdef __cplusplus
