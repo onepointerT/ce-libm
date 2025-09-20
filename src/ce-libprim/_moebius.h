@@ -7,8 +7,9 @@ extern "C" {
 
 
 
-double _fourier_transformation( const double x );
+int moebius( const unsigned int k );
 
+int _ffak_prim_only( const unsigned int k );
 
 #ifdef __cplusplus
 }

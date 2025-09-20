@@ -402,6 +402,10 @@ double gcd( const double a, const double m );
 double lcm( const double a, const double b );
 double multiplinv( const double x );
 
+// [C23 Sum/Factorial]
+
+double ffak( const double n );
+
 
 #pragma intrinsic(acos)
 #pragma intrinsic(acosf)

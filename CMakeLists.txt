@@ -23,4 +23,4 @@ target_link_libraries( a_ce m_ce )
 
 file( GLOB LIBPRIM_SOURCES src/ce-libprim/*.c )
 add_library( prim_ce ${LIBPRIM_SOURCES} )
-target_link_libraries( prim_ce a_ce )
+target_link_libraries( prim_ce m_ce )
