@@ -93,3 +93,49 @@ bool bitstr_bit_is_bithex( const char bit ) {
         || bit == 'a' || bit == 'b' || bit == 'c' || bit == 'd' || bit == 'e'
         || bit == 'f';
 }
+
+
+struct BitStrIteratorPair* __init_bitstr_iterator_pair( struct BitStr* lhs, struct BitStr* rhs ) {
+    struct BitStrIteratorPair* it = (struct BitStrIteratorPair*) malloc(sizeof(struct BitStrIteratorPair));
+
+    it->first = __init_bitstr_iterator( 0, lhs );
+    it->second = __init_bitstr_iterator( 0, rhs );
+
+    return it;
+}
+
+bool decrement( struct BitStrIteratorPair* it ) {
+    _update_bitstr_iterator_previous( it->first );
+    _update_bitstr_iterator_previous( it->second );
+}
+
+bool increment( struct BitStrIteratorPair* it ) {
+    _update_bitstr_iterator_next( it->first );
+    _update_bitstr_iterator_next( it->second );
+}
+
+
+struct BitStrIteratorEquation* __init_bitstr_iterator_equation( struct BitStr* lhs, struct BitStr* rhs, const unsigned int result_start ) {
+    struct BitStrIteratorEquation* it_eq = (struct BitStrIteratorEquation*) malloc(sizeof(struct BitStrIteratorEquation));
+
+    const size_t result_start_loi = lengthOfInt(result_start);
+    char* result_start_chr = (char*) malloc(sizeof(char)*result_start_loi);
+    struct BitStr* result = __init_bitstr_valued( result_start_loi, result_start_chr );
+    it_eq->result = __init_bitstr_iterator( 0, result );
+
+    it_eq->it = __init_bitstr_iterator_pair( lhs, rhs );
+    
+    return it_eq;
+}
+
+
+bool decrement_equation( struct BitStrIteratorEquation* it ) {
+    decrement( it->it );
+    _update_bitstr_iterator_previous( it->result );
+}
+
+
+bool increment_equation( struct BitStrIteratorEquation* it ) {
+    increment( it->it );
+    _update_bitstr_iterator_next( it->result );
+}
