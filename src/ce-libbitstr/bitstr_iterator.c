@@ -48,7 +48,7 @@ struct BitStrIterator* _update_bitstr_iterator_next( struct BitStrIterator* bsi 
     if ( bsi->obj == 0 ) return 0;
     else if ( bsi->value == '\0' ) { 
         bsi->pos = 0;
-        bsi->native = getpos( bsi->obj->bstr, 0 );
+        bsi->native = bitstr_pos_get( bsi->obj->bstr, 0 );
         bsi->value = (char) bsi->native->native_value;
         return bsi;
     } else if ( bsi->pos == bsi->obj->size - 1 ) { bsi->value = 'x'; bsi->native = 0; return bsi; }
@@ -62,7 +62,7 @@ struct BitStrIterator* _update_bitstr_iterator_previous( struct BitStrIterator* 
     if ( bsi->obj == 0 ) return 0;
     else if ( bsi->value == 'x' ) {
         bsi->pos = bsi->obj->size - 1;
-        bsi->native = getpos( bsi->obj->bstr, bsi->pos );
+        bsi->native = bitstr_pos_get( bsi->obj->bstr, bsi->pos );
         bsi->value = (char) bsi->native->native_value;
     } else if ( bsi->pos == 0 ) { bsi->value = '\0'; bsi->native = 0; return bsi; }
     else bsi->pos--;

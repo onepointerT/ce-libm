@@ -19,7 +19,7 @@ size_t lengthOfInt( const unsigned int bitstr ) {
     while ( (unsigned int) rest > (unsigned int) 0xf && rest > 10 ) {
         rest = bitstr % (unsigned int) pow(10, expo);
         if ( rest == 0 ) return expo;
-        else ++expo
+        else ++expo;
     }
 
     return result + 1;
