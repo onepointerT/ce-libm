@@ -97,6 +97,6 @@ struct Interval* prim_chooseone_interval( const unsigned int from_n, const unsig
 
 const unsigned int prim_chooseone( const unsigned int from_n, const unsigned int to_n ) {
     struct Interval* prim_interv = prim_number_interval( from_n, to_n );
-    if ( probability_interval_choseone(prim_interv) == 0 ) return 0;
+    if ( interval_choseone(prim_interv) == 0 ) return 0;
     return prim_number_gandhi( prim_interv->chosen );
 }
