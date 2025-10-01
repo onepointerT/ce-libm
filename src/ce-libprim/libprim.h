@@ -17,7 +17,6 @@
 #include "sys/types.h"
 #include <float.h>
 #include "limits.h"
-#include "integral.h"
 #include "prim_numbers.h"
 #include "libm.h"
 #include <stdint.h>

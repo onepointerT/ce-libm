@@ -39,7 +39,7 @@ bool is_prim_number( const int p ) {
     const int div_one = p % 1;
     const int div_self = _fourier_transformation( p );
 
-    return div_one == 0 && div_self < 1;
+    return div_one == 0 && div_self < 1 && div_self != 0;
 }
 
 
