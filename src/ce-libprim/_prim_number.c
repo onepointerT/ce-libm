@@ -1,10 +1,14 @@
 
 #include "_prim_number.h"
 
+#include <stdlib.h>
+
 #include <libm.h>
 
 #include "_fourier_transformation.h"
 #include "_moebius.h"
+#include "_random_interval.h"
+
 
 int prim_number_gandhi( const unsigned int n ) {
     const double fak_n = _ffak_prim_only( n );
@@ -31,8 +35,39 @@ int prim_number_willians( const unsigned int n ) {
 }
 
 
-int prim_number_interval( const unsigned int from_n, const unsigned int to_n ) {
-    
+int* prim_number_array( const unsigned int from_n, const unsigned int to_n ) {
+    const unsigned int n_amount = to_n - from_n;
+
+    int* intArr = (int*) malloc(sizeof(int)*(n_amount)); // Maximal this much numbers
+
+    unsigned int i = 0;
+    for ( unsigned int p = prim_number_willians(from_n)
+        ; p <= to_n && i < n_amount && is_prim_number(p)
+        ; p = prim_number_willians(p), i++
+    ) {
+        intArr[i] = p;
+    }
+
+    int* primArr = (int*) malloc(sizeof(int)*(i+1));
+    for ( unsigned int pia = 0; pia < i; pia++ ) {
+        primArr[pia] = intArr[pia];
+    }
+
+    return primArr;
+}
+
+
+struct Interval* prim_number_interval( const unsigned int from_n, const unsigned int to_n ) {
+
+    int* primArr = prim_number_array( from_n, to_n );
+    unsigned int i = sizeof(primArr) / sizeof(int);
+
+    struct IntArray* prim_arr = __init_int_array( i );
+    prim_arr->numbers = primArr;
+    struct Interval* prim_interv = __init_interval_defaultsize( i, primArr[0], primArr[i-1] );
+    prim_interv->interval = prim_arr;
+
+    return prim_interv;
 }
 
 bool is_prim_number( const int p ) {
@@ -48,4 +83,20 @@ double _barkley_rosser_median( const int pi_n ) {
     const int upper = pi_n / ( ln(pi_n) - (3/2) );
 
     return (lower + upper) / 2;
+}
+
+
+
+struct Interval* prim_chooseone_interval( const unsigned int from_n, const unsigned int to_n ) {
+    struct Interval* prim_interv = prim_number_interval( from_n, to_n );
+    if ( probability_interval_choseone(prim_interv) != 0 ) return prim_interv;
+    return 0;
+}
+
+
+
+const unsigned int prim_chooseone( const unsigned int from_n, const unsigned int to_n ) {
+    struct Interval* prim_interv = prim_number_interval( from_n, to_n );
+    if ( probability_interval_choseone(prim_interv) == 0 ) return 0;
+    return prim_number_gandhi( prim_interv->chosen );
 }
