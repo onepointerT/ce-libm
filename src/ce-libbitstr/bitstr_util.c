@@ -80,7 +80,7 @@ struct BitStrPos* bitstr_pos_get( const unsigned int bitstr, const unsigned int 
 
 
 void bitstr_pos_apply_int( const struct BitStrPos* pos, unsigned int* bitstr ) {
-    char* cbit = (char*) malloc(sizeof(bitstr)/sizeof(unsigned int));
+    char* cbit = (char*) malloc(sizeof(*bitstr)/sizeof(unsigned int));
     sprintf(cbit, "%s", *bitstr);
     cbit[pos->native_pos-1] = (char) pos->new_value;
     *bitstr = bitcharToInt(cbit);
