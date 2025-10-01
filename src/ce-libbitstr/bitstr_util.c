@@ -90,3 +90,14 @@ void bitstr_pos_apply_int( const struct BitStrPos* pos, unsigned int* bitstr ) {
 void bitstr_pos_apply( const struct BitStrPos* pos, struct BitStr* bitstr ) {
     bitstr_pos_apply_int( pos, &bitstr->bstr );
 }
+
+
+unsigned short getlastbit( const unsigned short value, bool binary ) {
+    double last_bit = value % 10;
+    return clamp( last_bit, 0x0, binary ? 0x1 : 0xf );
+}
+
+
+unsigned short getlastbitnot( const unsigned short value ) {
+    return 0x0 + (unsigned short) (value / 10);
+}

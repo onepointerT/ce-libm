@@ -6,6 +6,7 @@
 extern "C" {
 #endif
 
+#include <stdbool.h>
 #include <stddef.h>
 
 
@@ -30,6 +31,8 @@ struct BitStr;
 void bitstr_pos_apply_int( const struct BitStrPos* pos, unsigned int* bitstr );
 void bitstr_pos_apply( const struct BitStrPos* pos, struct BitStr* bitstr );
 
+unsigned short getlastbit( const unsigned short value, bool binary );
+unsigned short getlastbitnot( const unsigned short value );
 
 
 #ifdef __cplusplus
