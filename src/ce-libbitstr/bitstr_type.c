@@ -9,6 +9,8 @@
 
 #include <libm.h>
 
+#include "bitstr_iterator.h"
+
 
 bool is_bit( const struct BitStr* bitstr, const size_t pos ) {
     return pos < bitstr->size ? (unsigned int) bitchar(bitstr)[pos] <= (unsigned int) '1' : false;
@@ -59,15 +61,15 @@ const char* bitchar_hex( const struct BitStr* bitstr ) {
 
 
 unsigned int bitcharToInt( const char* bitstr ) {
-    size_t bitstr_length = sizeof(bitstr) / sizeof(const char*);
+    size_t bitstr_length = sizeof(*bitstr) / sizeof(const char);
 
     unsigned int result = 0x0;
     bool is_hex = false;
     for ( unsigned int pos = bitstr_length - 1; pos >= 0; pos-- ) {
-        if ( ! is_bit(bitstr, pos) && is_bit_hex(bitstr, pos) ) is_hex = true;
-        else if ( ! is_bit_hex(bitstr, pos) ) return 0;
+        if ( ! bitstr_bit_is_bit(bitstr[pos]) && bitstr_bit_is_bithex(bitstr[pos]) ) is_hex = true;
+        else if ( ! bitstr_bit_is_bithex(bitstr[pos]) ) return 0;
 
-        const unsigned int powpos = pow(10, pos+1);
+        const unsigned int powpos = pow(10, pos);
         result = result + 0x0 + (powpos * (unsigned short) bitstr[pos]);
     }
 
