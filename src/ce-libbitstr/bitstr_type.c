@@ -86,15 +86,47 @@ struct BitStr* __init_bitstr( const size_t bits ) {
     }
 
     bitstr->bstr = bitcharToInt( bs );
+    bitstr->it = 0;
 
     return bitstr;
 }
 
 
 struct BitStr* __init_bitstr_valued( const size_t bits, const char* value ) {
-    struct BitStr* bitstr = __init_bitstr( bits );
+     struct BitStr* bitstr = (struct BitStr*) malloc(sizeof(struct BitStr));
 
+    bitstr->size = bits;
     bitstr->bstr = bitcharToInt( value );
+    bitstr->it = 0;
 
     return bitstr;
+}
+
+
+bool bitstr_iterator_next( struct BitStr* bitstr ) {
+    if ( bitstr->it == 0 ) {
+        bitstr->it = __init_bitstr_iterator( 0, bitstr );
+        return true;
+    }
+
+    bitstr->it = _update_bitstr_iterator_next( bitstr->it );
+    if ( bitstr->it == 0 ) return false;
+    return true;
+}
+
+
+bool bitstr_iterator_prev( struct BitStr* bitstr ) {
+    if ( bitstr->it == 0 ) {
+        bitstr->it = __init_bitstr_iterator( bitstr->size - 1, bitstr );
+        return true;
+    }
+
+    bitstr->it = _update_bitstr_iterator_previous( bitstr->it );
+    if ( bitstr->it == 0 ) return false;
+    return true;
+}
+
+
+void bitstr_iterator_reset( struct BitStr* bitstr ) {
+    bitstr->it = 0;
 }

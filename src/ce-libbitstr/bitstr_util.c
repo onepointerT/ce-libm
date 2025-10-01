@@ -39,6 +39,26 @@ unsigned int pushpos( const unsigned int bitstr, const size_t pos, const unsigne
 }
 
 
+unsigned int getpos( const unsigned int bitstr, const size_t pos ) {
+    return (bitstr % (unsigned int)(pos - 1)) - (bitstr % (unsigned int)(pos - 2));
+}
+
+
+unsigned int* fillBitStr( const size_t length, const unsigned short value ) {
+    char* bitstr = (char*) malloc(sizeof(char)*length);
+
+    for ( unsigned int b = length - 1; b >= 0; b-- ) {
+        bitstr[b] = (char) value;
+    }
+
+    unsigned int* bitint = (unsigned int*) malloc(sizeof(unsigned int));
+    *bitint = 0x0;
+    sprintf(bitint, "%x", bitstr);
+
+    return bitint;
+}
+
+
 struct BitStrPos* __init_bitstr_pos( const unsigned int pos_factor_native ) {
     struct BitStrPos* pos = (struct BitStrPos*) malloc(sizeof(struct BitStrPos));
 

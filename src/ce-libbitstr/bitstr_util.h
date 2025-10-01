@@ -10,8 +10,11 @@ extern "C" {
 
 
 size_t lengthOfInt( const unsigned int bitstr );
+
 unsigned int pushpos( const unsigned int bitstr, const size_t pos, const unsigned short value );
-unsigned int fillBitStr( const size_t length, const unsigned short value );
+unsigned int getpos( const unsigned int bitstr, const size_t pos );
+
+unsigned int* fillBitStr( const size_t length, const unsigned short value );
 
 
 typedef struct BitStrPos {

@@ -24,9 +24,6 @@ struct BitStr* xor( const struct BitStr* lhs, const struct BitStr* rhs );
 struct BitStr* nand( const struct BitStr* lhs, const struct BitStr* rhs );
 
 
-#include "_bitstr_operator.h"
-
-
 #ifdef __cplusplus
 }
 #endif
