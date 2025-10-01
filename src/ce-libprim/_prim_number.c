@@ -14,7 +14,7 @@ int prim_number_gandhi( const unsigned int n ) {
     const double fak_n = _ffak_prim_only( n );
     const double sum = moebius( fak_n ) / (pow(2, fak_n) - 1);
 
-    return fabs( 1 - (1/ln(2)) * ln(-(1/2)+sum) );
+    return (int) 1 - (1/ln(2)) * ln(-(1/2)+sum);
 }
 
 
@@ -25,8 +25,8 @@ int prim_number_willians( const unsigned int n ) {
     for ( unsigned int k = 1; k <= upper_sum_border; k++ ) {
         if ( ! is_prim_number(k) ) continue;
         else {
-            const double fx1 = fabs( k / ( 1 + _barkley_rosser_median(k) ) );
-            const double fx2 = fabs( pow( fx1, (1/k) ) );
+            const double fx1 = k / ( 1 + _barkley_rosser_median(k) );
+            const double fx2 = pow( fx1, (1/k) );
             sum_result = sum_result + fx2;
         }
     }
